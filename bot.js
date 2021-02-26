@@ -12,9 +12,9 @@
 require('dotenv').config()
 const Discord = require('discord.js')
 const client = new Discord.Client()
-const parse = require('./parseEvent.js')
+const parse = require('./includes/parseEvent.js')
 const fs = require('fs')
-const play = require('./play.js')
+const play = require('./includes/play.js')
 let dir = 'C:/Users/Vex/Google Drive/KawaiiBotSounds'
 let global = 0
 let voiceCommand = false;
