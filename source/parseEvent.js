@@ -18,7 +18,7 @@ module.exports = parseEvent = async (event) => {
     let promise = new Promise((resolve, reject) => {
         // deconstruct
         let message = event.content
-        
+        let sendHelp = false;
         // grab args
         let args = message.split(' ')
         // declare / set vars
@@ -62,6 +62,7 @@ module.exports = parseEvent = async (event) => {
             event.delete().catch((error) => {
                 console.error(error)
             })
+            sendHelp = false;
             return
         }
 
@@ -88,6 +89,9 @@ module.exports = parseEvent = async (event) => {
         // text action -> webscrape and text ouput
         // voice actions -> play sound file
         // tts action -> invoke say
+        event.delete().catch((error) => {
+            console.error(error)
+        })
     }).catch((error) => {
         console.error("ERROR: ", error)
     })
