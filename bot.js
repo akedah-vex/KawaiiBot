@@ -12,12 +12,12 @@
 require('dotenv').config()
 const Discord = require('discord.js')
 const client = new Discord.Client()
-const parse = require('./includes/parseEvent.js')
+const parse = require('./source/parseEvent.js')
 const fs = require('fs')
-const play = require('./includes/play.js')
-const message = require('./includes/message')
-const scrape = require('./includes/scrape.js')
-const formParty = require('./includes/party')
+const play = require('./source/play.js')
+const message = require('./source/message')
+const scrape = require('./source/scrape.js')
+const formParty = require('./source/party')
 let global = 0
 let partyData
 let voiceCommand = false;
