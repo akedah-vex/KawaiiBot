@@ -5,7 +5,7 @@
     "main": "bot.js",
     "author": "Henry Vex Graves",
     "scripts": {
-        "test": "mocha tests/*.js",
+        "test": "nyc mocha tests/*.js",
         "start": "node bot.js",
         "debug": "nodemon bot.js"
     },
@@ -33,5 +33,8 @@
         "window": "^4.2.7",
         "winston": "^3.3.3",
         "youtube-mp3-downloader": "^0.7.3"
+    },
+    "devDependencies": {
+        "nyc": "^15.1.0"
     }
 }
