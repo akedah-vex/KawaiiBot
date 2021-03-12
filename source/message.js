@@ -6,5 +6,7 @@
  */
 
 module.exports = message = (event, user) => {
-    user.send("dm")
+    if (event == null)
+        return null
+    return user.send(event.content)
 }
