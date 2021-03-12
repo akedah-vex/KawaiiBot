@@ -15,9 +15,16 @@ const client = new Discord.Client()
 const parse = require('./includes/parseEvent.js')
 const fs = require('fs')
 const play = require('./includes/play.js')
-let dir = 'C:/Users/Vex/Google Drive/KawaiiBotSounds'
+const message = require('./includes/message')
+const scrape = require('./includes/scrape.js')
+const formParty = require('./includes/party')
 let global = 0
+let partyData
 let voiceCommand = false;
+let players = []
+let playerCount = 1;
+let maxPlayers = 5;
+let partyForming = false;
 /**
  * Bot init, await for ready status from client,
  * then log in.
@@ -31,50 +38,78 @@ client.login(process.env.DISCORD_TOKEN)
  * Event block, parse and process all message events here
  */
 client.on('message', async (event) => {
-    if (event.content.startsWith('./') || event.content.startsWith('/')) {
-        let files = fs.readdirSync(dir)
-        let help = "Voice channel commands: \n"
-        let sendHelp = false
-        for (file in files) {
-            if (event.content == './help') {
-                help += './'+files[file].split('.')[0]+'\n'
-                sendHelp = true
-            } else if (files[file].split('.')[0] == event.content.split(' ')[0].split('/')[1]) {
-                console.log(files[file])
-                voiceCommand = true
-                if (event.member.voice.channel) {
-                    await play(
-                        `C:/Users/Vex/Google Drive/KawaiiBotSounds/${files[file]}`, 
-                        event.member.voice.channel
-                        ).then((result) => {
-                            result[0].play(result[1])
-                        })
-                    break
-                } else {
-                    event.channel.send('Why are you so null dude? :\\')
-                    break
-                }
-            }
-        }
-
-        if (sendHelp)
-            event.author.send(help)
-
-        if ( !voiceCommand && !sendHelp) {
-            await parse(event).then((result, error) => {
-                if (!error) {
-                    console.log("client.on message: " + result)
-                    event.channel.send(`${result}`)
-                } else {
-                    console.error("ERROR: ", error)
-                }
-            })
-            
-        }
-        voiceCommand = false
+    if (event.content.startsWith('///')) {
+        // admin talk
+        let msg = event.content.split('///')[1]
+        client.channels.cache.get("398213925050646559").send(msg)
         await event.delete().catch((error) => {
             console.error(error)
         })
+    } else if (event.content.startsWith('./') || event.content.startsWith('/')) {
+        console.log("")
+        console.log(event.author.username + "#" + event.author.id)
+        await parse(event).then((result, error) => {
+            if (error) {
+                console.error("ERROR: ", error)
+            }
+            console.log("client.on message: " + result)
+            event.channel.send(`${result}`)
+        })
+       
+        
+    } else if (event.content.startsWith('`q')) {
+        partyData = await formParty(event)
+        game = partyData[0]
+        players = partyData[1]
+        playerCount = partyData[2]
+        partyForming = true;
     }
+})
+
+client.on('messageReactionAdd', async (reaction, user) => {
+    if (!partyForming)
+        return
+    // When we receive a reaction we check if the reaction is partial or not
+    if (reaction.partial) {
+        // If the message this reaction belongs to was removed the fetching might result in an API error, which we need to handle
+        try {
+            await reaction.fetch();
+        } catch (error) {
+            console.error('Something went wrong when fetching the message: ', error);
+            // Return as `reaction.message.author` may be undefined/null
+            return;
+        }
+    }
+    console.log(game, " ", playerCount, " ", players)
+    if (players.length < maxPlayers) {
+        if (user.username == 'KawaiiBot' || players.includes("+ "+user.username))
+            return
+        players.push("+ "+user.username)
+        let msg = new Discord.MessageEmbed()
+            .setTitle('Valorant party queue started ')
+            .setThumbnail('https://i.imgur.com/RGUkZmy.png')
+            .addFields(
+                { name: `Players (${playerCount}/${maxPlayers})`, value: players}
+            )
+            .setFooter('React to this message to join!', 'https://media1.tenor.com/images/ecc46e7dca1e13982b41fbe404764145/tenor.gif?itemid=17412863');
+        reaction.message.edit(msg)
+        // let party = await editParty(reaction.message)
+        // reaction.message.edit(party)
+        playerCount++;
+    } else if (players.length >= maxPlayers) {
+    
+        let msg = new Discord.MessageEmbed()
+            .setTitle('Valorant party queue started ')
+            .setThumbnail('https://i.imgur.com/RGUkZmy.png')
+            .setImage()
+            .addFields(
+                { name: `Players (${playerCount}/${maxPlayers})`, value: players}
+            )
+            .setFooter('This party is now full', 'https://media1.tenor.com/images/ecc46e7dca1e13982b41fbe404764145/tenor.gif?itemid=17412863');
+        reaction.message.edit(msg)
+        // let party = await editParty(reaction.message)
+        // reaction.message.edit(party)
+    }
+
 })
 
