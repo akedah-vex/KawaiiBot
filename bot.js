@@ -38,11 +38,12 @@ client.login(process.env.DISCORD_TOKEN)
  * Event block, parse and process all message events here
  */
 client.on('message', async (event) => {
+    event.content = event.content.toLowerCase();
     if (event.content.startsWith('///')) {
         // admin talk
         let msg = event.content.split('///')[1]
         client.channels.cache.get("398213925050646559").send(msg)
-        await event.delete().catch((error) => {
+        event.delete().catch((error) => {
             console.error(error)
         })
     } else if (event.content.startsWith('./') || event.content.startsWith('/')) {
@@ -55,8 +56,9 @@ client.on('message', async (event) => {
             console.log("client.on message: " + result)
             event.channel.send(`${result}`)
         })
-       
-        
+        event.delete().catch((error) => {
+            console.error(error)
+        })
     } else if (event.content.startsWith('`q')) {
         partyData = await formParty(event)
         game = partyData[0]
