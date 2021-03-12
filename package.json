@@ -17,6 +17,7 @@
         "giphy-api": "^2.0.1",
         "google-tts-api": "0.0.4",
         "image-downloader": "^4.0.1",
+        "mocha": "^8.3.1",
         "node-opus": "^0.3.3",
         "nodejs-web-scraper": "^3.1.4",
         "nodemon": "^2.0.7",
