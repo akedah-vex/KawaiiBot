@@ -1,11 +1,11 @@
 {
-    "name": "KawaiBot02",
+    "name": "KawaiiBot",
     "version": "1.0.0",
-    "description": "Rolls rng",
+    "description": "A discord bot with voice commands, gifs/imgs",
     "main": "bot.js",
     "author": "Henry Vex Graves",
     "scripts": {
-        "test": "nyc --reporter=text --reporter=html mocha tests/*.js",
+        "test": "nyc --reporter=text --reporter=html mocha tests/*.js | coveralls",
         "start": "node bot.js",
         "debug": "nodemon bot.js"
     },
@@ -35,6 +35,8 @@
         "youtube-mp3-downloader": "^0.7.3"
     },
     "devDependencies": {
+        "coveralls": "^3.1.0",
+        "mocha-lcov-reporter": "^1.3.0",
         "nyc": "^15.1.0"
     }
 }
