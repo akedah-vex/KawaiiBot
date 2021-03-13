@@ -1,11 +1,11 @@
 {
-    "name": "KawaiiBot",
+    "name": "KawaiiBot02",
     "version": "1.0.0",
     "description": "A discord bot with voice commands, gifs/imgs",
     "main": "bot.js",
     "author": "Henry Vex Graves",
     "scripts": {
-        "test": "jest --coverage && coveralls < coverage/lcov.info",
+        "test": "nyc --reporter=text --reporter=html mocha tests/*.js",
         "start": "node bot.js",
         "debug": "nodemon bot.js"
     },
