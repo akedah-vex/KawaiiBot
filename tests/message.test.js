@@ -19,7 +19,6 @@ describe('message.js tests:', function() {
         let event = new Event()
         event.content = "dm"
         assert(message(event, user) === "dm");
-        delete user, event
     });
 
     it('returns "" on empty string', function() {
@@ -35,7 +34,6 @@ describe('message.js tests:', function() {
         let event = new Event()
         event.content = ""
         assert(message(event, user) === "");
-        delete user, event
     })
 
     it('returns null with event = null', function() {
@@ -50,6 +48,5 @@ describe('message.js tests:', function() {
         let user = new User()
         let event
         assert(message(event, user) === null);
-        delete user, event
     })
 });

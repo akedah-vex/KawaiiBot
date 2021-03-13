@@ -5,7 +5,7 @@
     "main": "bot.js",
     "author": "Henry Vex Graves",
     "scripts": {
-        "test": "nyc --reporter=text --reporter=html mocha tests/*.js | coveralls",
+        "test": "jest --coverage && coveralls < coverage/lcov.info",
         "start": "node bot.js",
         "debug": "nodemon bot.js"
     },
