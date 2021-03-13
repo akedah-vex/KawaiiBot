@@ -32,7 +32,6 @@ module.exports = parseEvent = async (event) => {
             if (event.content == './help') {
                 help += './'+files[file].split('.')[0]+'\n'
                 sendHelp = true
-                return
             } else if (files[file].split('.')[0] == event.content.split(' ')[0].split('/')[1]) {
                 console.log(files[file])
                 voiceCommand = true
