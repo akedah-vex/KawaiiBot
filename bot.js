@@ -18,6 +18,11 @@ const play = require('./source/play.js')
 const message = require('./source/message')
 const scrape = require('./source/scrape.js')
 const formParty = require('./source/party')
+var PrettyError = require('pretty-error');
+
+// instantiate PrettyError, which can then be used to render error objects
+var pe = new PrettyError();
+pe.start();
 let global = 0
 let partyData
 let voiceCommand = false;
