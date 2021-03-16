@@ -6,6 +6,7 @@
     "author": "Henry Vex Graves",
     "scripts": {
         "test": "nyc --reporter=text --reporter=html mocha tests/*.js",
+        "coverage": "nyc report --reporter=text-lcov | coveralls",
         "start": "node bot.js",
         "debug": "nodemon bot.js"
     },
