@@ -4,8 +4,6 @@ node_js:
 
 before_install:
   - npm install -g npm@6.14.8
-  - npm install -g nyc
-  - npm install -g jest
   - npm install
 
 script: npm run test
