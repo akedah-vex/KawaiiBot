@@ -9,9 +9,7 @@ const parseEvent = require('../source/parseEvent');
 const discord = require("discord.js")
 describe('parseEvent.js tests:', () => {
   it('can send help message', () => {
-    let event = {
-      content = "./help"
-    }
+
     assert(1 === 1)
   })
 })

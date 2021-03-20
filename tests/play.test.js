@@ -9,12 +9,7 @@ const discord = require("discord.js")
 
 describe('play.js tests:', () => {
   it('play null', () => {
-    let audioFile = {
-      content = "./help"
-    }
-    let channel = {
-
-    }
+    
     assert(1 === 1)
   })
 })
