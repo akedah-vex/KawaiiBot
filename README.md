@@ -7,7 +7,7 @@ A personal recreation of the once popular discord bot named the same.
 ---
 ## Requirements
 
-For development, you will only need Node.js and a node global package, Yarn, installed in your environement.
+For development, you will only need node.js and npm.
 
 ### Node
 - #### Node installation on Windows
@@ -38,31 +38,14 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
     $ npm install npm -g
 
 ###
-### Yarn installation
-  After installing node, this project will need yarn too, so just run the following command.
-
-      $ npm install -g yarn
-
 ---
 
 ## Install
 
-    $ git clone https://github.com/YOUR_USERNAME/PROJECT_TITLE
-    $ cd PROJECT_TITLE
-    $ yarn install
-
-## Configure app
-
-Open `a/nice/path/to/a.file` then edit it with your settings. You will need:
-
-- A setting;
-- Another setting;
-- One more setting;
+    $ git clone https://github.com/HenryGraves/KawaiiBot
+    $ cd KawaiiBot
+    $ npm install
 
 ## Running the project
 
-    $ yarn start
-
-## Simple build for production
-
-    $ yarn build
+    $ npm start
