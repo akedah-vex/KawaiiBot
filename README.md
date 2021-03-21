@@ -9,6 +9,11 @@ A personal recreation of the once popular discord bot named the same.
 
 For development, you will only need node.js and npm.
 
+### FFmpeg
+- Currently this project is dependent on ffmpeg for audio functionality. Voice channel commands will not function properly without it
+- https://ffmpeg.org/
+
+
 ### Node
 - #### Node installation on Windows
 
