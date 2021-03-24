@@ -2,6 +2,7 @@ const Discord = require('discord.js')
 
 module.exports = formParty = (event) => {
     let promise = new Promise((resolve, reject) => {
+        
         let game = event.content.split(' ')[1]
         let mention = event.content.split(' ')[2]
         let players = ["+ "+event.author.username]
