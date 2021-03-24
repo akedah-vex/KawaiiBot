@@ -125,7 +125,6 @@ client.on('voiceStateUpdate', (voiceChannel, user) => {
     voiceChannel.channel && 
     voiceChannel.channel.members && 
     voiceChannel.channel.members.size) {
-        // console.log(client)
         let members = voiceChannel.channel.members.size
         console.log(voiceChannel.channel.members.size)
         if (members == 1) {
