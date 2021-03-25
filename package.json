@@ -7,6 +7,7 @@
     "scripts": {
         "docs": "jsdoc -r bot.js ./source/ -R ./README.md -d ./documentation/",
         "test": "nyc --reporter=html --reporter=text mocha tests/*.js",
+        "tests": "nyc --reporter=text mocha tests/*.js",
         "coverage": "nyc report --reporter=text-lcov | coveralls",
         "start": "node bot.js",
         "debug": "nodemon bot.js",
