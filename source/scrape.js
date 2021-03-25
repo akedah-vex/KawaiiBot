@@ -2,6 +2,7 @@
  * @name scrape.js
  * @description an interface for scraping for images using
  *              cheerio.js
+ * @note soon to be deprecated by refactor scrape to use gif api issue 
  */
 const getRandomInt = require("./random.js")
 const cheerio = require("cheerio")
