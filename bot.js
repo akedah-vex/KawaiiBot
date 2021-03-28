@@ -104,9 +104,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
         // reaction.message.edit(party)
         playerCount++;
     } else if (players.length >= maxPlayers) {
-    
         let msg = new Discord.MessageEmbed()
-            .setTitle('Valorant party queue started ')
+            .setTitle('Valorant party queue started')
             .setThumbnail('https://i.imgur.com/RGUkZmy.png')
             .setImage()
             .addFields(
@@ -114,10 +113,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
             )
             .setFooter('This party is now full', 'https://media1.tenor.com/images/ecc46e7dca1e13982b41fbe404764145/tenor.gif?itemid=17412863');
         reaction.message.edit(msg)
-        // let party = await editParty(reaction.message)
-        // reaction.message.edit(party)
     }
-
 })
 
 client.on('voiceStateUpdate', (voiceChannel, user) => {
