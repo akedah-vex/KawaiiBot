@@ -13,12 +13,11 @@ require('dotenv').config()
 const Discord = require('discord.js')
 const client = new Discord.Client()
 const parse = require('./source/parseEvent.js')
-const fs = require('fs')
-const play = require('./source/play.js')
-const message = require('./source/message')
-const scrape = require('./source/scrape.js')
 const formParty = require('./source/party')
-var PrettyError = require('pretty-error');
+var PrettyError = require('pretty-error')
+const remove = require('./source/deleteEvent')
+const { isArray } = require('util')
+
 
 // instantiate PrettyError, which can then be used to render error objects
 var pe = new PrettyError();
@@ -36,6 +35,8 @@ let partyForming = false;
  */
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`)
+    client.user.setStatus("online");
+    client.user.setActivity('with your heart')
 })
 client.login(process.env.DISCORD_TOKEN)
 
@@ -44,26 +45,25 @@ client.login(process.env.DISCORD_TOKEN)
  */
 client.on('message', async (event) => {
     event.content = event.content.toLowerCase();
-    if (event.content.startsWith('///')) {
-        // admin talk
-        let msg = event.content.split('///')[1]
-        client.channels.cache.get("398213925050646559").send(msg)
-        event.delete().catch((error) => {
-            console.error(error)
-        })
-    } else if (event.content.startsWith('./') || event.content.startsWith('/')) {
-        console.log("")
-        console.log(event.author.username + "#" + event.author.id)
+    
+    
+    if (event.content.startsWith('./')) {
         await parse(event).then((result, error) => {
-            if (error) {
+            
+            if (error)
                 console.error("ERROR: ", error)
-            }
             console.log("client.on message: " + result)
-            event.channel.send(`${result}`)
-        })
-        event.delete().catch((error) => {
-            console.error(error)
-        })
+
+            if (isArray(result)) { // isArray is deprecated but it works really well so?
+                let fileOptions = result[1]
+                event.channel.send(`${result[0]}`, fileOptions ? fileOptions : null)
+            } else {
+                event.channel.send(`${result}`)
+            }
+            
+        }).catch(error => { console.error("ERROR: ", error)} )
+        remove(event)
+
     } else if (event.content.startsWith('`q')) {
         partyData = await formParty(event)
         game = partyData[0]
@@ -128,3 +128,9 @@ client.on('voiceStateUpdate', (voiceChannel, user) => {
         }
     }
 })
+
+
+
+/*
+
+ */
