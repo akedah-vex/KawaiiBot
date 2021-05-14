@@ -5,12 +5,26 @@
  * @date 5/11/2021
  * @version 0.0.2
  */
-const time = new Date()
+const timeStamp = require('./timeStamp')
 const fs = require('fs')
 
 module.exports = log = (event) => {
-    let newLog = "::New Event::\n" + "time: " + time.getTime() + "\n content:" + event.content + "\n"
-    console.log("")
+    let ts = timeStamp()
+    let time = ts.time
+    let date = ts.date
+    let newLog = `
++-------------------------------------------
+|:::::::::::::::::New Event:::::::::::::::::
+|
+|time:       @${time} on ${date}
+|content:    ${event.content}
+|username:   ${event.author.username}#${event.author.id}
+|
+|___________________________________________
+
+`
     console.log(newLog)
-    console.log(event.author.username + "#" + event.author.id)
+    fs.writeFile(`kawaiiBot-command-log-${date}.txt`, newLog, {flag: 'a+'}, (error, fd) => {
+        if (error) return console.error(error)
+    })
 }
