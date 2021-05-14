@@ -42,7 +42,7 @@ module.exports = parseEvent = async (event) => {
         
         // confirmed command attempt
         // populate files from shared dir for voice commands
-
+        
         // command list / meme guards
         if (event.content == './commands')                                 { event.author.send(helpMsg); remove(event); return }
         if (event.content == 'ricardomilos' || event.content == 'ricardo') { event.channel.send(ricardo); return }
@@ -115,7 +115,6 @@ module.exports = parseEvent = async (event) => {
             //     console.error(`Error in giph search multi argument: ${err}`)
             // })
         }
-        remove(event)
     }).catch((error) => {
         console.error("ERROR: ", error)
     })
