@@ -1,9 +1,14 @@
 /**
- * @name KawaiBot02 discord bot by Henry Graves
+ * @name KawaiiBot
  * @file bot.js
  * @author Henry Graves
  * @date 2/5/2021
  * @version 0.0.2
+ * @description The main js file responsible for connecting to the
+ *              discord api, creating the bot client and logging in.
+ *              The client then sits and waits for events to fire,
+ *              such as a message, channel state update or reaction to
+ *              a message in chat.
  */
 
  /**
@@ -18,17 +23,19 @@ var PrettyError = require('pretty-error')
 const remove = require('./source/deleteEvent')
 const { isArray } = require('util')
 
-
 // instantiate PrettyError, which can then be used to render error objects
 var pe = new PrettyError();
 pe.start();
-let global = 0
+
+/**
+ * Global variables that shouldn't exist tbh.
+ */
 let partyData
-let voiceCommand = false;
 let players = []
 let playerCount = 1;
 let maxPlayers = 5;
 let partyForming = false;
+
 /**
  * Bot init, await for ready status from client,
  * then log in.
@@ -45,25 +52,24 @@ client.login(process.env.DISCORD_TOKEN)
  */
 client.on('message', async (event) => {
     event.content = event.content.toLowerCase();
-    
-    
     if (event.content.startsWith('./')) {
-        await parse(event).then((result, error) => {
-            
-            if (error)
-                console.error("ERROR: ", error)
+        await parse(event).then((result) => {
             console.log("client.on message: " + result)
-
-            if (isArray(result)) { // isArray is deprecated but it works really well so?
-                let fileOptions = result[1]
+            /* 
+                Must check to see if an array is returned because
+                currently an array being returned from parse() means
+                that a file is being sent to the channel along side a
+                text message. There is probably a more elegant way to 
+                handle sending files but this works so..
+            */
+            if (isArray(result)) { 
+                let fileOptions = result[1] // the file to be sent
                 event.channel.send(`${result[0]}`, fileOptions ? fileOptions : null)
             } else {
                 event.channel.send(`${result}`)
             }
-            
         }).catch(error => { console.error("ERROR: ", error)} )
-        remove(event)
-
+        remove(event) // delete the command from the chat
     } else if (event.content.startsWith('`q')) {
         partyData = await formParty(event)
         game = partyData[0]
@@ -73,6 +79,10 @@ client.on('message', async (event) => {
     }
 })
 
+/**
+ * This is some beta ass nonsense, it's improper and needs to be
+ * cleaned up but I'm too lazy to gaf rn.
+ */
 client.on('messageReactionAdd', async (reaction, user) => {
     if (!partyForming)
         return
@@ -116,6 +126,12 @@ client.on('messageReactionAdd', async (reaction, user) => {
     }
 })
 
+/**
+ * This code block is responsible for checking to see
+ * if there are less than 1 members connected to the 
+ * voice channel the bot is currently in.
+ * If this is the case, disconnect the bot.
+ */
 client.on('voiceStateUpdate', (voiceChannel, user) => {
     if (voiceChannel && 
     voiceChannel.channel && 
@@ -131,6 +147,11 @@ client.on('voiceStateUpdate', (voiceChannel, user) => {
 
 
 
-/*
 
+
+
+
+
+/*
+ spooky comment.
  */
