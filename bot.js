@@ -21,7 +21,10 @@ const parse = require('./source/parseEvent.js')
 const formParty = require('./source/party')
 var PrettyError = require('pretty-error')
 const remove = require('./source/deleteEvent')
+const send = require('./source/send')
+const resolveResult = require('./source/resolveResult')
 const { isArray } = require('util')
+const { resolve } = require('url')
 
 // instantiate PrettyError, which can then be used to render error objects
 var pe = new PrettyError();
@@ -32,9 +35,10 @@ pe.start();
  */
 let partyData
 let players = []
-let playerCount = 1;
-let maxPlayers = 5;
-let partyForming = false;
+let playerCount = 1
+let maxPlayers = 5
+let partyForming = false
+let voiceMembers = 0
 
 /**
  * Bot init, await for ready status from client,
@@ -54,20 +58,7 @@ client.on('message', async (event) => {
     event.content = event.content.toLowerCase();
     if (event.content.startsWith('./')) {
         await parse(event).then((result) => {
-            console.log("client.on message: " + result)
-            /* 
-                Must check to see if an array is returned because
-                currently an array being returned from parse() means
-                that a file is being sent to the channel along side a
-                text message. There is probably a more elegant way to 
-                handle sending files but this works so..
-            */
-            if (isArray(result)) { 
-                let fileOptions = result[1] // the file to be sent
-                event.channel.send(`${result[0]}`, fileOptions ? fileOptions : null)
-            } else {
-                event.channel.send(`${result}`)
-            }
+            send(event, result)
         }).catch(error => { console.error("ERROR: ", error)} )
         remove(event) // delete the command from the chat
     } else if (event.content.startsWith('`q')) {
@@ -132,17 +123,18 @@ client.on('messageReactionAdd', async (reaction, user) => {
  * voice channel the bot is currently in.
  * If this is the case, disconnect the bot.
  */
-client.on('voiceStateUpdate', (voiceChannel, user) => {
-    if (voiceChannel && 
-    voiceChannel.channel && 
-    voiceChannel.channel.members && 
-    voiceChannel.channel.members.size) {
-        let members = voiceChannel.channel.members.size
-        console.log(voiceChannel.channel.members.size)
-        if (members == 1) {
-            voiceChannel.channel.leave()
-        }
+client.on('voiceStateUpdate', (oldState, newState) => {
+    if (!newState.channel || !oldState.channel) return
+    if (oldState.channel.members.size == 1) {
+        newState.channel.leave()
     }
+    
+    // if (voiceChannel && voiceChannel.channel && voiceChannel.channel.members && voiceChannel.channel.members.size) {
+    //     let members = voiceChannel.channel.members.size
+    //     console.log(voiceChannel.channel.members.size)
+    //     if (members == 1)
+    //         voiceChannel.channel.leave()
+    // }
 })
 
 
