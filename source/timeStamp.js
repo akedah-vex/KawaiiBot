@@ -1,9 +1,9 @@
 /**
- * @name KawaiBot02 discord bot by Henry Graves
  * @file timeStamp.js
  * @author Henry Graves
  * @date 2/5/2021
- * @version 0.0.2
+ * @description a simple module to return a timestamp object
+ *              with the current time and date as properties
  */
 
 module.exports = timeStamp = () => {
