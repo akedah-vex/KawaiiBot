@@ -24,7 +24,7 @@ module.exports = log = (event) => {
 
 `
     console.log(newLog)
-    fs.writeFile(`kawaiiBot-command-log-${date}.txt`, newLog, {flag: 'a+'}, (error, fd) => {
+    fs.writeFile(`logs/kawaiiBot-command-log-${date}.txt`, newLog, {flag: 'a+'}, (error, fd) => {
         if (error) return console.error(error)
     })
 }
