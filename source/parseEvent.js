@@ -5,6 +5,7 @@
  * @date 2/5/2021
  * @version 0.0.2
  */
+require('dotenv').config()
 const scrape = require('./scrape.js')
 const play = require('./play.js')
 const fs = require('fs')
@@ -14,7 +15,7 @@ const remove = require('./deleteEvent.js')
 const ricardo = require('./asciArt/ricardo')
 const uwu = require('./asciArt/uwu')
 const https = require('https')
-var giphy = require('giphy-api')('7RKoCZFqkHohJDXQfT2P29sHGqcT99XK');
+var giphy = require('giphy-api')(process.env.GIPHY_TOKEN);
 /**
  * processEvent function, determines the nature of the
  * event and processes accordingly.
@@ -29,7 +30,7 @@ module.exports = parseEvent = async (event) => {
         let author = '<@'+event.author.id+'>'
         let dir = 'C:/Users/Vex/Google Drive/KawaiiBot/audio/'
         let files = fs.readdirSync(dir)
-        let helpLink = "https://www.henrygraves.dev/projects/kawaiibot/kawaiibotcommands"
+        let helpLink = "https://www.henrygraves.dev/kawaiibotcommands"
         let fileObj = {
             files: []
         }
@@ -44,16 +45,15 @@ module.exports = parseEvent = async (event) => {
         // populate files from shared dir for voice commands
         
         // command list / meme guards
-        if (event.content == './commands')                                 { event.author.send(helpMsg); remove(event); return }
-        if (event.content == 'ricardomilos' || event.content == 'ricardo') { event.channel.send(ricardo); return }
-        if (event.content == "uwu")                                        { event.channel.send(uwu); return }
+        if (event.content == './commands')                                 { resolve(helpMsg); return }
+        if (event.content == 'ricardomilos' || event.content == 'ricardo') { resolve(ricardo); return }
+        if (event.content == "uwu")                                        { resolve(uwu); return }
         if (event.content.startsWith('///'))                               { botSpeak(event, client); return }
         // end meme guards
 
         // loop through voice commands
         for (file in files) {
             if (files[file].split('.')[0] == event.content.split(' ')[0].split('/')[1]) {
-                console.log(files[file])
                 voiceCommand = true
                 if (event.member.voice.channel) {
                     play (
@@ -75,45 +75,22 @@ module.exports = parseEvent = async (event) => {
         
         for (file in files) {
             if (files[file].split('.')[0] == event.content.split(' ')[0].split('/')[1]) {
-                console.log("static image command")
                 fileObj = {
                     files: [`${dir}${files[file]}`]
                 }
-                resolve(['', fileObj])
+                resolve({string: '', fileObj})
+                return
             }
         }
-        // if not a pre-determined image, image scrape w/ giphy api
-        // if mentioned, grab the @ for text commands
-        // for (arg in args)
-        //     if (args[arg].includes('<@!')) { tag = args[arg]; break }
-        // let term = `${args[0].split('./')[1]}-anime`
         if (args.length == 1) {
             event.channel.send(author)
             resolve(scrape(args[0]))
-            // giphy.search(term).then((response) => {
-            //     var totalResponses = response.data.length
-            //     var responseIndex = Math.floor((Math.random() * 10) + 1) % totalResponses
-            //     var responseFinal = response.data[responseIndex]
-            //     console.log(totalResponses)
-
-            //     resolve([`<@!${event.author.id}>`, {
-            //         files: [responseFinal.images.fixed_height.url]}])
-            // }).catch((err) => {
-            //     console.error(`Error in giph search 1 argument: ${err}`)
-            // })
+            return
         } else {
             let mention = `${author} ${message.split('/')[1]}`
             event.channel.send(mention)
             resolve(scrape(args[0]))
-            // giphy.search(term).then((response) => {
-            //     var totalResponses = response.data.length;
-            //     var responseIndex = Math.floor((Math.random() * 10) + 1) % totalResponses
-            //     var responseFinal = response.data[responseIndex];
-            //     resolve([`${author} ${message.split('/')[1]} ${tag}`, {
-            //         files: [responseFinal.images.fixed_height.url]}])
-            // }).catch((err) => {
-            //     console.error(`Error in giph search multi argument: ${err}`)
-            // })
+            return
         }
     }).catch((error) => {
         console.error("ERROR: ", error)
