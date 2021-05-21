@@ -25,8 +25,8 @@ const logicGuards   = require('./logicGuards.js')
  * @return  promise The promise resolved.
  */
 module.exports = parseEvent = async (event) => {
-    log(event)
     let promise = new Promise((resolve, reject) => {
+        log(event)
         if (logicGuards(event)) return;
         // declare / set local scope vars
         let message = event.content

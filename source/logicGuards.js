@@ -31,8 +31,8 @@ module.exports = logicGuards = (event) => {
     if (event.content.startsWith('./say'))  { speak(event);                         return guardReturn(event) }
     if (event.content == './oceanman')      { event.author.send(tbatz);             return guardReturn(event) }
     if (event.content == './commands')      { event.author.send(getHelpMessage());  return guardReturn(event) }
-    if (event.content == 'ricardomilos')    { resolve(ricardo);                     return guardReturn(event) }
-    if (event.content == "uwu")             { resolve(uwu);                         return guardReturn(event) }
+    if (event.content == 'ricardomilos')    { event.channel.send(ricardo());                        return guardReturn(event) }
+    if (event.content == "uwu")             { event.channel.send(uwu());                            return guardReturn(event) }
     if (event.content.startsWith('///'))    { botSpeak(event, client);              return guardReturn(event) }
     if (event.content.startsWith('./stop')) {
         playSound (

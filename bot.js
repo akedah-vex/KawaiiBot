@@ -23,6 +23,7 @@ const parse         = require('./source/parseEvent.js')
 const formParty     = require('./source/party')
 const remove        = require('./source/deleteEvent')
 const send          = require('./source/send')
+const logicGuards   = require('./source/logicGuards.js')
 
 /**
  * Instantiate PrettyError, which can then be used to render error objects
@@ -62,6 +63,8 @@ client.login(process.env.DISCORD_TOKEN)
  */
 client.on('message', async (event) => {
     event.content = event.content.toLowerCase();
+    if (logicGuards(event)) return;
+
     if (event.content.startsWith('./')) {
         await parse(event).then((result) => {
             send(event, result)
