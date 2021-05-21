@@ -6,6 +6,13 @@
  *              with the current time and date as properties
  */
 
+/**
+ * @name    timeStamp
+ * @brief   Parse the Date object and return a timestamp object easily usable.
+ * 
+ * @param   none
+ * @return  Object  The timestamp object containing a current time and date.
+ */
 module.exports = timeStamp = () => {
     let currentDate = new Date();
     let day = currentDate.getDate()

@@ -1,9 +1,9 @@
 /**
- * @name KawaiiBot
- * @file bot.js
- * @author Henry Graves
- * @date 2/5/2021
- * @version 0.0.2
+ * @name        KawaiiBot
+ * @file        bot.js
+ * @author      Henry Graves
+ * @date        2/5/2021
+ * @version     0.0.2
  * @description The main js file responsible for connecting to the
  *              discord api, creating the bot client and logging in.
  *              The client then sits and waits for events to fire,
@@ -11,22 +11,22 @@
  *              a message in chat.
  */
 
- /**
-  * Include Block, include all needed packages / functions
-  */
+/**
+ * Include Block, include all needed packages / functions
+ */
 require('dotenv').config()
-const Discord = require('discord.js')
-const client = new Discord.Client()
-const parse = require('./source/parseEvent.js')
-const formParty = require('./source/party')
-var PrettyError = require('pretty-error')
-const remove = require('./source/deleteEvent')
-const send = require('./source/send')
-const resolveResult = require('./source/resolveResult')
-const { isArray } = require('util')
-const { resolve } = require('url')
+const Discord       = require('discord.js')
+var PrettyError     = require('pretty-error')
 
-// instantiate PrettyError, which can then be used to render error objects
+const client        = new Discord.Client()
+const parse         = require('./source/parseEvent.js')
+const formParty     = require('./source/party')
+const remove        = require('./source/deleteEvent')
+const send          = require('./source/send')
+
+/**
+ * Instantiate PrettyError, which can then be used to render error objects
+ */
 var pe = new PrettyError();
 pe.start();
 
@@ -38,11 +38,12 @@ let players = []
 let playerCount = 1
 let maxPlayers = 5
 let partyForming = false
-let voiceMembers = 0
 
 /**
- * Bot init, await for ready status from client,
- * then log in.
+ * @name    ready
+ * @brief   Bot init, await for ready status from client,
+ *          then log in.
+ * @param   none.
  */
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`)
@@ -52,7 +53,12 @@ client.on('ready', () => {
 client.login(process.env.DISCORD_TOKEN)
 
 /**
- * Event block, parse and process all message events here
+ * @name    message
+ * 
+ * @brief   Event block, parse and process all message events here
+ * 
+ * @param   event   The message event that gets passed in when a user
+ *                  types a message into a chat channel.
  */
 client.on('message', async (event) => {
     event.content = event.content.toLowerCase();
@@ -71,8 +77,12 @@ client.on('message', async (event) => {
 })
 
 /**
- * This is some beta ass nonsense, it's improper and needs to be
- * cleaned up but I'm too lazy to gaf rn.
+ * @name    messageReactionAdd
+ * 
+ * @brief   This is some beta ass nonsense, it's improper and needs to be
+ *          cleaned up but I'm too lazy to gaf rn.
+ * @param   reaction    The reaction the user added to the message
+ *          user        The user that added the reaction
  */
 client.on('messageReactionAdd', async (reaction, user) => {
     if (!partyForming)
@@ -118,23 +128,20 @@ client.on('messageReactionAdd', async (reaction, user) => {
 })
 
 /**
- * This code block is responsible for checking to see
- * if there are less than 1 members connected to the 
- * voice channel the bot is currently in.
- * If this is the case, disconnect the bot.
+ * @name    voiceStateUpdate
+ * 
+ * @brief   This code block is responsible for checking to see
+ *          if there are less than 1 members connected to the 
+ *          voice channel the bot is currently in.
+ *          If this is the case, disconnect the bot.
+ * 
+ * @param   oldState     The old state of the voice channel
+ *          newState     The new state of the voice channel
  */
 client.on('voiceStateUpdate', (oldState, newState) => {
-    if (!newState.channel || !oldState.channel) return
-    if (oldState.channel.members.size == 1) {
-        newState.channel.leave()
-    }
-    
-    // if (voiceChannel && voiceChannel.channel && voiceChannel.channel.members && voiceChannel.channel.members.size) {
-    //     let members = voiceChannel.channel.members.size
-    //     console.log(voiceChannel.channel.members.size)
-    //     if (members == 1)
-    //         voiceChannel.channel.leave()
-    // }
+    if (!oldState.channel) return
+    if (oldState.channel.members.size == 1)
+        oldState.channel.leave()
 })
 
 

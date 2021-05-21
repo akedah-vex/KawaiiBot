@@ -4,3 +4,5 @@ ffmpeg.exe
 jsdoc
 tests
 kawaiiBot-command-log*
+out.wav
+logs

@@ -2,16 +2,20 @@
  * @name scrape.js
  * @description an interface for scraping for images using
  *              cheerio.js
- * @note soon to be deprecated by refactor scrape to use gif api issue 
  */
-const getRandomInt = require("./random.js")
-const cheerio = require("cheerio")
-const url = require('url')
-const axios = require('axios')
+const getRandomInt  = require("./random.js")
+const cheerio       = require("cheerio")
+const url           = require('url')
+const axios         = require('axios')
 /**
- * build scraper to scrape all href tags, random select one,
- * then pull the main image from there. only pull hrefs with 
- * search term
+ * @name    scrape
+ * 
+ * @brief   Scraper to get all href tags, randomly select one,
+ *          then pull the main image from there. Lots of these 
+ *          functions used are deprecated, this function needs
+ *          to be re-worked.
+ * @param   term    The search term to pull a gif from.
+ * @return  string  The gif image url.
  */
 module.exports = scrape = async (term) => {
     term = term.split('/')[1]
@@ -25,16 +29,14 @@ module.exports = scrape = async (term) => {
     let $ = cheerio.load(response.data);
     let reqUrl = url.parse(website);
     $('img').map(function(i, e) {
-        let srcUrl = url.parse($(e).attr('src'));
+        let srcUrl = url.parse($(e).attr('src'))
         if (!srcUrl.host) {
-            images.push(url.resolve(reqUrl, srcUrl));
+            images.push(url.resolve(reqUrl, srcUrl))
         } else {
-            images.push(url.format(srcUrl));
+            images.push(url.format(srcUrl))
         }
     });
     let choice = getRandomInt(images.length)
-    // console.log(choice, images.length)
-    // console.log(images)
 
     while (
         images[choice].includes('/assets/img/') || 

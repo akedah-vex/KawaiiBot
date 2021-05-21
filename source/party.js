@@ -1,5 +1,8 @@
 const Discord = require('discord.js')
-
+/**
+ * This some whack shit and needs to be refactored before getting
+ * proper docs. BETA AF
+ */
 module.exports = formParty = (event) => {
     let promise = new Promise((resolve, reject) => {
         
