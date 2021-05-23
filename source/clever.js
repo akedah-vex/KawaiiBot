@@ -8,7 +8,7 @@
  const emoji            = require('emoji-random')
  const randomInt        = require('./random')
  const filterMentions   = require('./filterMentions')
- cleverbot = new Cleverbot;
+ cleverbot = new Cleverbot();
  cleverbot.configure({botapi: process.env.CLEVERBOT_API_KEY});
  
 module.exports = clever = (event) => {
