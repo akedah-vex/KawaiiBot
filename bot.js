@@ -17,13 +17,17 @@
 require('dotenv').config()
 const Discord       = require('discord.js')
 var PrettyError     = require('pretty-error')
+const KawaiiBot     = require('./source/kawaiibot')
 
 const client        = new Discord.Client()
+const bot           = new KawaiiBot()
 const parse         = require('./source/parseEvent.js')
 const formParty     = require('./source/party')
 const remove        = require('./source/deleteEvent')
 const send          = require('./source/send')
 const logicGuards   = require('./source/logicGuards.js')
+const mentioned     = require('./source/mentioned')
+const clever        = require('./source/clever')
 
 /**
  * Instantiate PrettyError, which can then be used to render error objects
@@ -62,9 +66,8 @@ client.login(process.env.DISCORD_TOKEN)
  *                  types a message into a chat channel.
  */
 client.on('message', async (event) => {
-    event.content = event.content.toLowerCase();
-    if (logicGuards(event)) return;
-
+    if (logicGuards(event, client)) return
+    event.content = event.content.toLowerCase()
     if (event.content.startsWith('./')) {
         await parse(event).then((result) => {
             send(event, result)
@@ -75,7 +78,9 @@ client.on('message', async (event) => {
         game = partyData[0]
         players = partyData[1]
         playerCount = partyData[2]
-        partyForming = true;
+        partyForming = true
+    } else if (mentioned(event) == '740565901522239510') {
+        clever(event)
     }
 })
 
@@ -146,6 +151,15 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     if (oldState.channel.members.size == 1)
         oldState.channel.leave()
 })
+
+
+
+
+
+
+
+
+
 
 
 

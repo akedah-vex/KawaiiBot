@@ -4,6 +4,7 @@ const getHelpMessage    = require('./helpMessage')
 const speak             = require('./speak')
 const remove            = require('./deleteEvent')
 const playSound         = require('./play')
+const botSpeak          = require('./botSpeak')
 /**
  * @name    guardReturn
  * @brief   A quick helper function just to clean up the 
@@ -26,15 +27,16 @@ let guardReturn = (event) => {
  * @returns Boolean A true or false value depending on the event content.
  * @note    All of these if's have a resulting action and WILL return true.
 */
-module.exports = logicGuards = (event) => {
+module.exports = logicGuards = (event, client) => {
     let tbatz = "Tbatz is a fucking loser for adding the oceanman file."
-    if (event.content.startsWith('./say'))  { speak(event);                         return guardReturn(event) }
-    if (event.content == './oceanman')      { event.author.send(tbatz);             return guardReturn(event) }
-    if (event.content == './commands')      { event.author.send(getHelpMessage());  return guardReturn(event) }
-    if (event.content == 'ricardomilos')    { event.channel.send(ricardo());                        return guardReturn(event) }
-    if (event.content == "uwu")             { event.channel.send(uwu());                            return guardReturn(event) }
-    if (event.content.startsWith('///'))    { botSpeak(event, client);              return guardReturn(event) }
-    if (event.content.startsWith('./stop')) {
+    if (event.content.startsWith('~/*'))        { botSpeak(event, client);              return guardReturn(event) }
+    event.content = event.content.toLowerCase()
+    if (event.content.startsWith('./say'))      { speak(event);                         return guardReturn(event) }
+    if (event.content.includes('./oceanman'))   { event.author.send(tbatz);             return guardReturn(event) }
+    if (event.content == './commands')          { event.author.send(getHelpMessage());  return guardReturn(event) }
+    if (event.content == 'ricardo')             { event.channel.send(ricardo());        return true               }
+    if (event.content == 'uwu')                 { event.channel.send(uwu());            return true               }
+    if (event.content.startsWith('./stop'))     {
         playSound (
             `C:/Users/Vex/Google Drive/KawaiiBot/audio/gunshot.mp3`, 
             event.member.voice.channel

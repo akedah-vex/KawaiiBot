@@ -37,7 +37,6 @@ module.exports = parseEvent = async (event) => {
         let fileObj = { files: [] }
 
         /**
-         * confirmed command attempt
          * populate files from shared dir for voice commands
          * loop through voice commands
          */

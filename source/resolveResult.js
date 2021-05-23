@@ -15,7 +15,7 @@
  *                  the result object has a file object associated.
  */
 module.exports = resolveResult = (result) => {
-    if (result.fileObj == null && result.string == null)
+    if (result.fileObj == null)
         return false
     return true
 }
