@@ -35,6 +35,14 @@ module.exports = parseEvent = async (event) => {
         let dir = 'C:/Users/Vex/Google Drive/KawaiiBot/audio/'
         let files = fs.readdirSync(dir)
         let fileObj = { files: [] }
+        /**
+         * Check to see if the event is a call to play music
+         */
+        if (args[0].includes('play') && args.length > 1) {
+            let songLink = args[1]
+            console.log(songLink)
+            return
+        }
 
         /**
          * populate files from shared dir for voice commands

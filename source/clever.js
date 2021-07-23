@@ -11,11 +11,18 @@
  cleverbot = new Cleverbot();
  cleverbot.configure({botapi: process.env.CLEVERBOT_API_KEY});
  
-module.exports = clever = (event) => {
+module.exports = clever = (event, type) => {
     event.content = filterMentions(event.content)
     cleverbot.write(event.content, (response) => {
-        event.channel.send(
-            randomInt(100) < 50 ? response.output += ` ${emoji.random()}` : response.output
-        )
+        if (type == "dm") {
+            event.author.send(
+                randomInt(100) < 50 ? response.output += ` ${emoji.random()}` : response.output
+            ).catch()
+        } else {
+            event.channel.send(
+                randomInt(100) < 50 ? response.output += ` ${emoji.random()}` : response.output
+            )
+        }
+        
     })
 }

@@ -15,28 +15,14 @@
  * Include Block, include all needed packages / functions
  */
 require('dotenv').config()
-const Discord       = require('discord.js')
-var PrettyError     = require('pretty-error')
+const PrettyError   = require('pretty-error')
+const pe            = new PrettyError();
 const KawaiiBot     = require('./source/kawaiibot')
-
-const client        = new Discord.Client()
-const bot           = new KawaiiBot()
-const parse         = require('./source/parseEvent.js')
-const formParty     = require('./source/party')
-const remove        = require('./source/deleteEvent')
-const send          = require('./source/send')
-const logicGuards   = require('./source/logicGuards.js')
-const mentioned     = require('./source/mentioned')
-const clever        = require('./source/clever')
-
-/**
- * Instantiate PrettyError, which can then be used to render error objects
- */
-var pe = new PrettyError();
-pe.start();
+const kawaiibot     = new KawaiiBot()
 
 /**
  * Global variables that shouldn't exist tbh.
+ * Deprecate party forming?
  */
 let partyData
 let players = []
@@ -45,44 +31,17 @@ let maxPlayers = 5
 let partyForming = false
 
 /**
- * @name    ready
+ * Start Pretty Error
+ */
+pe.start();
+
+/**
+ * @name    getMessages
  * @brief   Bot init, await for ready status from client,
  *          then log in.
  * @param   none.
  */
-client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`)
-    client.user.setStatus("online");
-    client.user.setActivity('with your heart')
-})
-client.login(process.env.DISCORD_TOKEN)
-
-/**
- * @name    message
- * 
- * @brief   Event block, parse and process all message events here
- * 
- * @param   event   The message event that gets passed in when a user
- *                  types a message into a chat channel.
- */
-client.on('message', async (event) => {
-    if (logicGuards(event, client)) return
-    event.content = event.content.toLowerCase()
-    if (event.content.startsWith('./')) {
-        await parse(event).then((result) => {
-            send(event, result)
-        }).catch(error => { console.error("ERROR: ", error)} )
-        remove(event) // delete the command from the chat
-    } else if (event.content.startsWith('`q')) {
-        partyData = await formParty(event)
-        game = partyData[0]
-        players = partyData[1]
-        playerCount = partyData[2]
-        partyForming = true
-    } else if (mentioned(event) == '740565901522239510') {
-        clever(event)
-    }
-})
+kawaiibot.getMessages()
 
 /**
  * @name    messageReactionAdd
@@ -91,8 +50,10 @@ client.on('message', async (event) => {
  *          cleaned up but I'm too lazy to gaf rn.
  * @param   reaction    The reaction the user added to the message
  *          user        The user that added the reaction
+ * @deprecated 5/24/2021
  */
-client.on('messageReactionAdd', async (reaction, user) => {
+kawaiibot.getClient().on('messageReactionAdd', async (reaction, user) => {
+    return // currently disable this feature
     if (!partyForming)
         return
     // When we receive a reaction we check if the reaction is partial or not
@@ -146,7 +107,7 @@ client.on('messageReactionAdd', async (reaction, user) => {
  * @param   oldState     The old state of the voice channel
  *          newState     The new state of the voice channel
  */
-client.on('voiceStateUpdate', (oldState, newState) => {
+kawaiibot.getClient().on('voiceStateUpdate', (oldState, newState) => {
     if (!oldState.channel) return
     if (oldState.channel.members.size == 1)
         oldState.channel.leave()
