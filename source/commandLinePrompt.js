@@ -9,9 +9,10 @@ const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 })
+console.log(">>")
 while(true) {
-    console.log(">>")
     rl.question('', () => {
+        console.log(">>")
         rl.close()
     })
     rl.on('close', () => {
