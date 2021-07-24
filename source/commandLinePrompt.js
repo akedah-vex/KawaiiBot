@@ -5,9 +5,7 @@ const prompt            = require('prompt')
  * while the bot is running. May add commands in the
  * future.
  */
- prompt = () => {
-    while(true) {
-        console.log(">>")
-        prompt('')
-    }
+while(true) {
+    console.log(">>")
+    prompt('')
 }
