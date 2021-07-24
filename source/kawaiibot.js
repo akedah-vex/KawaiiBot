@@ -50,7 +50,7 @@ module.exports = Kawaiibot = class {
          *                  types a message into a chat channel.
          */
         // spawn a subprocess here
-        const child = fork("commandLinePrompt.js")
+        const child = fork("source/commandLinePrompt.js")
         this.client.on('message', async (event) => {
             if (logicGuards(event, this.client)) return
             event.content = event.content.toLowerCase()
