@@ -12,6 +12,7 @@ const send              = require('./send')
 const deleteEvent       = require('./deleteEvent')
 const mentioned         = require('./mentioned')
 const clever            = require('./clever')
+const prompt            = require('prompt')
 
 
 module.exports = Kawaiibot = class {
@@ -34,6 +35,18 @@ module.exports = Kawaiibot = class {
     }
 
     /**
+     * Only purpose is to provide a prompt in command line
+     * while the bot is running. May add commands in the
+     * future.
+     */
+    prompt = () => {
+        while(true) {
+            console.log(">>")
+            prompt('')
+        }
+    }
+
+    /**
      * @name    getMessages
      * @brief   Bot init, await for ready status from client,
      *          then log in.
@@ -48,6 +61,7 @@ module.exports = Kawaiibot = class {
          * @param   event   The message event that gets passed in when a user
          *                  types a message into a chat channel.
          */
+        // spawn a subprocess here
         this.client.on('message', async (event) => {
             if (logicGuards(event, this.client)) return
             event.content = event.content.toLowerCase()
