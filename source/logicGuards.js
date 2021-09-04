@@ -29,6 +29,7 @@ let guardReturn = (event) => {
  * @note    All of these if's have a resulting action and WILL return true.
 */
 module.exports = logicGuards = (event, client) => {
+    let args = event.content.split(' ')
     let tbatz = "Tbatz is a fucking loser for adding the oceanman file."
     if (event.content.startsWith('~/*'))        { botSpeak(event, client);              return guardReturn(event) }
     event.content = event.content.toLowerCase()
@@ -37,7 +38,7 @@ module.exports = logicGuards = (event, client) => {
     if (event.content == './commands')          { event.author.send(getHelpMessage());  return guardReturn(event) }
     if (event.content == 'ricardo')             { event.channel.send(ricardo());        return true               }
     if (event.content == 'uwu')                 { event.channel.send(uwu());            return true               }
-    if (event.content == './dontepasta')        { event.channel.send(pasta());          return guardReturn(event) }
+    if (event.content == './dontepasta')        { event.channel.send(pasta(args[1]));          return guardReturn(event) }
     if (event.content.startsWith('./stop'))     {
         playSound (
             `C:/Users/Vex/Google Drive/KawaiiBot/audio/gunshot.mp3`, 
