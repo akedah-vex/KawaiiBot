@@ -5,6 +5,7 @@ const speak             = require('./speak')
 const remove            = require('./deleteEvent')
 const playSound         = require('./play')
 const botSpeak          = require('./botSpeak')
+const pasta             = require('./asciArt/dontepasta')
 /**
  * @name    guardReturn
  * @brief   A quick helper function just to clean up the 
@@ -36,6 +37,7 @@ module.exports = logicGuards = (event, client) => {
     if (event.content == './commands')          { event.author.send(getHelpMessage());  return guardReturn(event) }
     if (event.content == 'ricardo')             { event.channel.send(ricardo());        return true               }
     if (event.content == 'uwu')                 { event.channel.send(uwu());            return true               }
+    if (event.content == './dontepasta')        { event.channel.send(pasta());          return true               }
     if (event.content.startsWith('./stop'))     {
         playSound (
             `C:/Users/Vex/Google Drive/KawaiiBot/audio/gunshot.mp3`, 
