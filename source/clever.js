@@ -16,7 +16,7 @@ module.exports = clever = (event, type) => {
     cleverbot.write(event.content, (response) => {
         if (type == "dm") {
             if (event.content.includes('new') && event.content.includes('world') && event.content.includes('role')) {
-                let role = event.content.guild.roles.cache.find(r => r.id === "867134580880703558")
+                let role = event.guild.roles.cache.find(r => r.id === "867134580880703558")
                 event.author.roles.add(role);
                 event.author.send('New world role added! Have fun!')
             } else if (event.content.includes('new') && event.content.includes('world')) {
