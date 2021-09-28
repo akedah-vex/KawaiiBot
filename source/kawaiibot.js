@@ -69,7 +69,7 @@ module.exports = Kawaiibot = class {
                     )
                     member.roles.add(role);
                     event.author.send('New world role added! Have fun!')
-                    console.log("Added new world role to: ", member.username)
+                    console.log("Added new world role to: ", event.author.username + "#" + event.author.discriminator)
                 } else if (event.content.includes('new') && event.content.includes('world')) {
                     event.author.send("If you want the new world members role, make sure you say new world role in your message!")
                 } else {
