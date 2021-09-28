@@ -68,9 +68,7 @@ module.exports = Kawaiibot = class {
     }
 
     greetNewMembers = () => {
-        this.client.on('guildMemberAdd', member => {
-            member.send('Welcome!')
-        })
+        
     }
 
     /**

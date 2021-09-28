@@ -43,7 +43,10 @@ pe.start();
  */
 kawaiibot.getMessages()
 
-kawaiibot.greetNewMembers()
+kawaiibot.getClient().on('guildMemberAdd', member => {
+    console.log(member)
+    member.send('Welcome!')
+})
 
 
 /**
