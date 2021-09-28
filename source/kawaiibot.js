@@ -62,7 +62,7 @@ module.exports = Kawaiibot = class {
             } else if (event.channel.type == "dm") {
                 if (event.content.includes('new') && event.content.includes('world') && event.content.includes('role')) {
                     let guild = this.client.guilds.cache.find(({name}) => name === "Deimos Esports Community")
-                    let role = guild.roles.cache.find(({name}) => name === 'New World Members')
+                    let role = guild.roles.cache.find(({name}) => name === '👻 New World Members')
                     let member = guild.members.cache.find(
                         ({user: {username, discriminator}}) =>
                             `${username}#${discriminator}` === event.author.username + "#" + event.author.discriminator,
