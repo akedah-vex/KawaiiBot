@@ -60,7 +60,17 @@ module.exports = Kawaiibot = class {
                 }).catch(error => { console.error("ERROR: ", error)} )
                 deleteEvent(event) // delete the command from the chat
             } else if (event.channel.type == "dm") {
-                clever(event, event.channel.type)
+                if (event.content.includes('new') && event.content.includes('world') && event.content.includes('role')) {
+                    let guild = this.client.guilds.cache.find(({name}) => name === "Deimos Esports Community")
+                    let role = guild.roles.cache.find(({name}) => name === 'New World Members')
+                    
+                    event.author.roles.add(role);
+                    event.author.send('New world role added! Have fun!')
+                } else if (event.content.includes('new') && event.content.includes('world')) {
+                    event.author.send("If you want the new world members role, make sure you say new world role in your message!")
+                } else {
+                    clever(event, event.channel.type)
+                }
             } else if (mentioned(event) == this.id) {
                 clever(event, event.channel.type)
             }
