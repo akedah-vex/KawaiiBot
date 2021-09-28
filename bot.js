@@ -19,6 +19,7 @@ const PrettyError   = require('pretty-error')
 const pe            = new PrettyError();
 const KawaiiBot     = require('./source/kawaiibot')
 const kawaiibot     = new KawaiiBot()
+const process       = require('process')
 
 /**
  * Global variables that shouldn't exist tbh.
@@ -34,6 +35,12 @@ let partyForming = false
  * Start Pretty Error
  */
 pe.start();
+
+process.on('unhandledRejection', (err, p) => {
+    console.log('An unhandledRejection occurred');
+    console.log(`Rejected Promise: ${p}`);
+    console.log(`Rejection: ${err}`);
+});
 
 /**
  * @name    getMessages
