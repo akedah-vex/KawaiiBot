@@ -43,6 +43,9 @@ pe.start();
  */
 kawaiibot.getMessages()
 
+kawaiibot.greetNewMembers()
+
+
 /**
  * @name    messageReactionAdd
  * 

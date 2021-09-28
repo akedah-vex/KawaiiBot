@@ -67,6 +67,12 @@ module.exports = Kawaiibot = class {
         })
     }
 
+    greetNewMembers = () => {
+        this.client.on('guildMemberAdd', member => {
+            member.send('Welcome!')
+        })
+    }
+
     /**
      * @name    readDirectMessages
      * @brief   reads and replies to DM's
