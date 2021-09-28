@@ -44,15 +44,7 @@ pe.start();
 kawaiibot.getMessages()
 
 kawaiibot.getClient().on('guildMemberAdd', member => {
-    console.log(member.guild)
-    console.log('_-_________________________')
-    console.log(member.guild.name)
-    console.log('_-_________________________')
-
-    console.log(member.name)
-    console.log('_-_________________________')
-
-    member.send('Welcome to ', member.name, "!")
+    member.send('Welcome to ' + member.guild.name + "!")
     if (member.guild.id == '398202575675064321') {
         member.send("If you're joining for new world, just ask any server admin for the role :)")
     }
