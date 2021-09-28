@@ -29,7 +29,7 @@ module.exports = Kawaiibot = class {
         this.client.on('ready', () => {
             console.log(`Logged in as ${this.client.user.tag}!`)
             this.client.user.setStatus('online');
-            this.client.user.setActivity('with your heart')
+            this.client.user.setActivity('New World Queue')
         })
         this.client.login(process.env.DISCORD_TOKEN)
     }
