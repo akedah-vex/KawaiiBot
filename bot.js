@@ -46,7 +46,7 @@ kawaiibot.getMessages()
 kawaiibot.getClient().on('guildMemberAdd', member => {
     member.send('Welcome to ' + member.guild.name + "!")
     if (member.guild.id == '398202575675064321') {
-        member.send("If you're joining for new world, just ask any server admin for the role :)")
+        member.send("If you're joining for new world, just ask me for the \"new world role\" :)")
     }
 })
 
