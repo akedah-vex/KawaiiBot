@@ -15,9 +15,13 @@ module.exports = clever = (event, type) => {
     event.content = filterMentions(event.content)
     cleverbot.write(event.content, (response) => {
         if (type == "dm") {
-            event.author.send(
-                randomInt(100) < 50 ? response.output += ` ${emoji.random()}` : response.output
-            ).catch()
+            if (event.content.includes('new') && event.content.includes('world') && event.content.includes('role')) {
+                event.author.send('New world role added! Have fun!')
+            } else {
+                event.author.send(
+                    randomInt(100) < 50 ? response.output += ` ${emoji.random()}` : response.output
+                ).catch()
+            }
         } else {
             event.channel.send(
                 randomInt(100) < 50 ? response.output += ` ${emoji.random()}` : response.output
