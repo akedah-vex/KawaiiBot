@@ -37,9 +37,9 @@ let partyForming = false
 pe.start();
 
 process.on('unhandledRejection', (err, p) => {
-    console.log('An unhandledRejection occurred');
-    console.log(`Rejected Promise: ${p}`);
-    console.log(`Rejection: ${err}`);
+    console.log('\t\tAn unhandledRejection occurred');
+    console.log(`\t\tRejected Promise: ${p}`);
+    console.log(`\t\tRejection: ${err}`);
 });
 
 /**
