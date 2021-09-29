@@ -71,7 +71,6 @@ module.exports = Kawaiibot = class {
                             ({user: {username, discriminator}}) =>
                                 `${username}#${discriminator}` === event.author.username + "#" + event.author.discriminator,
                         )
-                        console.log(member.user.username)
                         member.roles.add(role);
                         event.author.send('New world role added! Have fun!')
                         console.log("Added new world role to: ", event.author.username + "#" + event.author.discriminator)
