@@ -61,6 +61,7 @@ module.exports = Kawaiibot = class {
                 deleteEvent(event) // delete the command from the chat
             } else if (event.channel.type == "dm") {
                 try {
+                    event.content = event.content.toLowerCase()
                     if (event.content.includes('new') && 
                         event.content.includes('world') && 
                         event.content.includes('role') && event.author.id != '740565901522239510') {
@@ -70,6 +71,7 @@ module.exports = Kawaiibot = class {
                             ({user: {username, discriminator}}) =>
                                 `${username}#${discriminator}` === event.author.username + "#" + event.author.discriminator,
                         )
+                        console.log(member.user.username)
                         member.roles.add(role);
                         event.author.send('New world role added! Have fun!')
                         console.log("Added new world role to: ", event.author.username + "#" + event.author.discriminator)
