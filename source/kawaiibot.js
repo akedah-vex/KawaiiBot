@@ -60,6 +60,7 @@ module.exports = Kawaiibot = class {
                 }).catch(error => { console.error("ERROR: ", error)} )
                 deleteEvent(event) // delete the command from the chat
             } else if (event.channel.type == "dm") {
+                console.log(event.author.username + ": " + event.content)
                 try {
                     event.content = event.content.toLowerCase()
                     if (event.content.includes('new') && 
