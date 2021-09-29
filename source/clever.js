@@ -8,10 +8,12 @@
  const emoji            = require('emoji-random')
  const randomInt        = require('./random')
  const filterMentions   = require('./filterMentions')
+ const me               = require('./constants/me')
  cleverbot = new Cleverbot();
  cleverbot.configure({botapi: process.env.CLEVERBOT_API_KEY});
  
 module.exports = clever = (event, type) => {
+    if (event.author.id == me()) return
     event.content = filterMentions(event.content)
     cleverbot.write(event.content, (response) => {
         if (type == "dm") {
@@ -24,6 +26,5 @@ module.exports = clever = (event, type) => {
                 randomInt(100) < 50 ? response.output += ` ${emoji.random()}` : response.output
             )
         }
-        
     })
 }
