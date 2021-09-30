@@ -12,7 +12,7 @@ const send              = require('./send')
 const deleteEvent       = require('./deleteEvent')
 const mentioned         = require('./mentioned')
 const clever            = require('./clever')
-const { fork }          = require('child_process')
+const notSelf           = require('./constants/notSelf')
 
 
 module.exports = Kawaiibot = class {
@@ -60,7 +60,8 @@ module.exports = Kawaiibot = class {
                 }).catch(error => { console.error("ERROR: ", error)} )
                 deleteEvent(event) // delete the command from the chat
             } else if (event.channel.type == "dm") {
-                console.log(event.author.username + ": " + event.content)
+                if (notSelf(event))
+                    console.log(event.author.username + ": " + event.content)
                 try {
                     event.content = event.content.toLowerCase()
                     if (event.content.includes('new') && 
