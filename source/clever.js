@@ -13,7 +13,6 @@
  cleverbot.configure({botapi: process.env.CLEVERBOT_API_KEY});
  
 module.exports = clever = (event, type) => {
-    if (event.author.id == me()) return
     event.content = filterMentions(event.content)
     cleverbot.write(event.content, (response) => {
         if (type == "dm") {
