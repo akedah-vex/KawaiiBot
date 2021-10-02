@@ -59,6 +59,7 @@ module.exports = Kawaiibot = class {
                 }).catch(error => { console.error("ERROR: ", error) })
                 deleteEvent(event) // delete the command from the chat
             } else if (event.channel.type == "dm") {
+                console.log(event.author.username + ": " + event.content) 
                 roleCheck(event)
                 clever(event, event.channel.type)
             } else if (mentioned(event) == this.id) {
