@@ -13,6 +13,7 @@ const deleteEvent       = require('./deleteEvent')
 const mentioned         = require('./mentioned')
 const clever            = require('./clever')
 const notSelf           = require('./constants/notSelf')
+const roleCheck = require('./roleCheck')
 
 
 module.exports = Kawaiibot = class {
@@ -37,8 +38,8 @@ module.exports = Kawaiibot = class {
     /**
      * @name    getMessages
      * @brief   Bot init, await for ready status from client,
-     *          then log in.
-     * @param   none.
+     *          then log in
+     * @param   none
      */
     getMessages = () => {
         /**
@@ -49,62 +50,28 @@ module.exports = Kawaiibot = class {
          * @param   event   The message event that gets passed in when a user
          *                  types a message into a chat channel.
          */
-        // spawn a subprocess here
-        //const child = fork("source/commandLinePrompt.js")
         this.client.on('message', async (event) => {
             if (logicGuards(event, this.client)) return
             event.content = event.content.toLowerCase()
             if (event.content.startsWith('./')) {
                 await parseEvent(event).then((result) => {
                     send(event, result)
-                }).catch(error => { console.error("ERROR: ", error)} )
+                }).catch(error => { console.error("ERROR: ", error) })
                 deleteEvent(event) // delete the command from the chat
             } else if (event.channel.type == "dm") {
-                console.log(event.author.username + ": " + event.content)
-                try {
-                    event.content = event.content.toLowerCase()
-                    if (event.content.includes('new') && 
-                        event.content.includes('world') && 
-                        event.content.includes('role') && event.author.id != '740565901522239510') {
-                        let guild = this.client.guilds.cache.find(({name}) => name === "Deimos Esports Community")
-                        let role = guild.roles.cache.find(({name}) => name === '👻 New World Members')
-                        let member = guild.members.cache.find(
-                            ({user: {username, discriminator}}) =>
-                                `${username}#${discriminator}` === event.author.username + "#" + event.author.discriminator,
-                        )
-                        member.roles.add(role);
-                        event.author.send('New world role added! Have fun!')
-                        console.log("Added new world role to: ", event.author.username + "#" + event.author.discriminator)
-                    } else if (event.content.includes('new') && event.content.includes('world')) {
-                        event.author.send("If you want the new world members role, make sure you say new world role in your message!")
-                    } else {
-                        clever(event, event.channel.type)
-                    }
-                } catch (exception) {
-                    console.log(exception)
-                }
-                
+                roleCheck(event)
+                clever(event, event.channel.type)
             } else if (mentioned(event) == this.id) {
                 clever(event, event.channel.type)
             }
         })
     }
 
-    greetNewMembers = () => {
-        
-    }
-
     /**
-     * @name    readDirectMessages
-     * @brief   reads and replies to DM's
-     * @param   none.
+     * @name    getClient
+     * @brief   returns the client object
+     * @return  The client object
      */
-    // readDirectMessages = () => {
-    //     this.client.on('dm', (event) => {
-
-    //     })
-    // }
-
     getClient = () => {
         return this.client
     }

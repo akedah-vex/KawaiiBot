@@ -32,12 +32,13 @@ let guardReturn = (event) => {
 module.exports = logicGuards = (event, client) => {
     let args = event.content.split(' ')
     let tbatz = "Tbatz is a fucking loser for adding the oceanman file."
-    if (!notSelf(event)) return
+    if (!notSelf(event)) return guardReturn(event)
     if (event.content.startsWith('~/*'))        { botSpeak(event, client);              return guardReturn(event) }
     event.content = event.content.toLowerCase()
     if (event.content.startsWith('./say'))      { speak(event);                         return guardReturn(event) }
     if (event.content.includes('./oceanman'))   { event.author.send(tbatz);             return guardReturn(event) }
-    if (event.content == './commands')          { event.author.send(getHelpMessage());  return guardReturn(event) }
+    if (event.content == './commands' || 
+        event.content == './help')              { event.author.send(getHelpMessage());  return guardReturn(event) }
     if (event.content == 'ricardo')             { event.channel.send(ricardo());        return true               }
     if (event.content == 'uwu')                 { event.channel.send(uwu());            return true               }
     if (event.content == './dontepasta')        { event.channel.send(pasta(args[1]));   return guardReturn(event) }
