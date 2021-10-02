@@ -32,7 +32,7 @@ let guardReturn = (event) => {
 module.exports = logicGuards = (event, client) => {
     let args = event.content.split(' ')
     let tbatz = "Tbatz is a fucking loser for adding the oceanman file."
-    if (!notSelf(event)) return guardReturn(event)
+    if (!notSelf(event)) return true
     if (event.content.startsWith('~/*'))        { botSpeak(event, client);              return guardReturn(event) }
     event.content = event.content.toLowerCase()
     if (event.content.startsWith('./say'))      { speak(event);                         return guardReturn(event) }
