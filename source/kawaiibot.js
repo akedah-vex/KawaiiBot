@@ -12,8 +12,6 @@ const send              = require('./send')
 const deleteEvent       = require('./deleteEvent')
 const mentioned         = require('./mentioned')
 const clever            = require('./clever')
-const notSelf           = require('./constants/notSelf')
-
 
 module.exports = Kawaiibot = class {
     id = '740565901522239510'
@@ -28,8 +26,8 @@ module.exports = Kawaiibot = class {
     constructor () {
         this.client.on('ready', () => {
             console.log(`Logged in as ${this.client.user.tag}!`)
-            this.client.user.setStatus('online');
-            this.client.user.setActivity('New World Queue')
+            this.client.user.setStatus('online')
+            this.client.user.setActivity('with your heart')
         })
         this.client.login(process.env.DISCORD_TOKEN)
     }
