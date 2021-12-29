@@ -10,6 +10,7 @@ const logicGuards       = require('./logicGuards')
 const parseEvent        = require('./parseEvent')
 const send              = require('./send')
 const deleteEvent       = require('./deleteEvent')
+const getHelpMessage    = require('./helpMessage')
 const mentioned         = require('./mentioned')
 const clever            = require('./clever')
 
@@ -73,6 +74,8 @@ module.exports = Kawaiibot = class {
                         member.roles.add(role);
                         event.author.send('New world role added! Have fun!')
                         console.log("Added new world role to: ", event.author.username + "#" + event.author.discriminator)
+                    } else if (event.content == "commands") {
+                        event.author.send(getHelpMessage());
                     } else {
                         clever(event, event.channel.type)
                     }
