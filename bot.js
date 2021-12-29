@@ -53,10 +53,8 @@ kawaiibot.getMessages()
 kawaiibot.getClient().on('guildMemberAdd', member => {
     
     member.send('Welcome to ' + member.guild.name + "!")
+    member.send("I'm a Deimos-built bot, use ./commands inside the robots-only chat to see what I do.")
     console.log(member.user.username + ' joined ' + member.guild.name)
-    if (member.guild.id == '398202575675064321') {
-        member.send("If you're joining for new world, just ask me for the \"new world role\" :)")
-    }
 })
 
 
