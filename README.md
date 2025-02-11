@@ -49,7 +49,7 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 
 ## Install
 
-    $ git clone https://github.com/HenryGraves/KawaiiBot
+    $ git clone https://github.com/akedah-vex/KawaiiBot
     $ cd KawaiiBot
     $ npm install
 
