@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/HenryGraves/KawaiiBot.svg?branch=master)](https://travis-ci.org/HenryGraves/KawaiiBot)
 [![Coverage Status](https://coveralls.io/repos/github/HenryGraves/KawaiiBot/badge.svg?branch=master)](https://coveralls.io/github/HenryGraves/KawaiiBot?branch=master)
-# KawaiiBot
+# KawaiiBot [DEPRECATED]
+The bot has been deprecated as it uses a very old method to integrate with discord.
+This can be updated but I have no time to do so. Maybe in the future. o7
 
 A personal recreation of the once popular discord bot named the same.
 
